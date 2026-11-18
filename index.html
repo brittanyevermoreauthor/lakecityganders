@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="locked">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -258,6 +258,22 @@ footer a{color:var(--on-berry)}
   .ticket{grid-template-columns:1fr 56px}
   .kpis{grid-template-columns:1fr 1fr}
 }
+
+/* lock screen */
+html.locked body{overflow:hidden}
+.lock-screen{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow-y:auto;background:var(--ice);
+  background-image:repeating-linear-gradient(115deg,transparent 0 46px,color-mix(in srgb,var(--line) 35%,transparent) 46px 47px);
+  padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+html:not(.locked) .lock-screen{display:none}
+.lock-card{width:100%;max-width:420px;padding:32px 28px;display:grid;gap:14px;justify-items:center;text-align:center;position:relative}
+.lock-card svg.crest{width:64px;height:64px}
+.lock-card h1{font-size:clamp(1.7rem,6vw,2.2rem);color:var(--berry)}
+.lock-card p{color:var(--muted);font-size:.95rem}
+.lock-card form{display:flex;gap:8px;flex-wrap:wrap;width:100%}
+.lock-card form label{width:100%;text-align:left}
+.lock-card .btn{flex:none}
+.lock-card.shake{animation:shake .35s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 </style>
 </head>
 <body>
@@ -280,6 +296,23 @@ footer a{color:var(--on-berry)}
   </symbol>
 </svg>
 
+
+<div class="lock-screen" id="lockScreen" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+  <svg class="daisy" style="width:60px;right:8%;top:10%;transform:rotate(14deg)"><use href="#daisy"/></svg>
+  <svg class="daisy" style="width:36px;left:10%;bottom:14%"><use href="#daisy"/></svg>
+  <div class="card lock-card" id="lockCard">
+    <svg class="crest"><use href="#crest"/></svg>
+    <span class="label">Lake City Ganders</span>
+    <h1 id="lockTitle">Locker room closed</h1>
+    <p>Staff and early readers only. Enter the password to come in.</p>
+    <form id="lockForm" autocomplete="off">
+      <label for="lockPw" class="label">Password</label>
+      <input id="lockPw" type="password" autocomplete="off" autofocus>
+      <button class="btn" type="submit">Enter</button>
+    </form>
+    <p class="err" id="lockErr" hidden>Wrong password. Try again.</p>
+  </div>
+</div>
 <div class="ticker" aria-label="Latest headlines">
   <div class="ticker-track" id="ticker"></div>
 </div>
@@ -758,6 +791,27 @@ renderQ();
 // ARC form (demo: connect to your newsletter tool later)
 $("#arcForm").addEventListener("submit",e=>{e.preventDefault();$("#arcOk").hidden=false;e.target.hidden=true});
 document.querySelectorAll('[aria-disabled="true"]').forEach(a=>a.addEventListener("click",e=>e.preventDefault()));
+</script>
+
+<script>
+// ===== LOCK SCREEN =====
+// Password is stored as a SHA-256 hash. To change it, hash the new password (lowercase) and paste it below.
+const LOCK_HASH="f5348d86207744f956b9717b5fb25ae1316a3cbf731bcf2990cacd20c2940254";
+function sha256(s){function r(v,a){return(v>>>a)|(v<<(32-a))}var P=Math.pow,W=P(2,32),out='',w=[],L=s.length*8,h=[],k=[],n=0,c,i,j,seen={};for(c=2;n<64;c++){if(!seen[c]){for(i=0;i<313;i+=c)seen[i]=c;h[n]=(P(c,.5)*W)|0;k[n++]=(P(c,1/3)*W)|0}}s+='\x80';while(s.length%64-56)s+='\x00';for(i=0;i<s.length;i++){j=s.charCodeAt(i);if(j>>8)return'';w[i>>2]|=j<<((3-i)%4)*8}w[w.length]=(L/W)|0;w[w.length]=L;for(j=0;j<w.length;){var b=w.slice(j,j+=16),o=h;h=h.slice(0,8);for(i=0;i<64;i++){var x=b[i-15],y=b[i-2],a=h[0],e=h[4],t1=h[7]+(r(e,6)^r(e,11)^r(e,25))+((e&h[5])^(~e&h[6]))+k[i]+(b[i]=i<16?b[i]:(b[i-16]+(r(x,7)^r(x,18)^(x>>>3))+b[i-7]+(r(y,17)^r(y,19)^(y>>>10)))|0),t2=(r(a,2)^r(a,13)^r(a,22))+((a&h[1])^(a&h[2])^(h[1]&h[2]));h=[(t1+t2)|0].concat(h);h[4]=(h[4]+t1)|0}for(i=0;i<8;i++)h[i]=(h[i]+o[i])|0}for(i=0;i<8;i++)for(j=3;j+1;j--){var v=(h[i]>>(j*8))&255;out+=(v<16?'0':'')+v.toString(16)}return out}
+document.documentElement.classList.add("locked");
+document.getElementById("lockForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const v=document.getElementById("lockPw").value.trim().toLowerCase();
+  if(sha256(v)===LOCK_HASH){
+    document.documentElement.classList.remove("locked");
+    document.getElementById("lockScreen").remove();
+  }else{
+    const c=document.getElementById("lockCard");
+    document.getElementById("lockErr").hidden=false;
+    c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");
+    document.getElementById("lockPw").select();
+  }
+});
 </script>
 
 </body>
