@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Lake City Ganders</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Graduate&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Allura&display=swap">
+<style>
+/* Layout: an official team site run by Maisie — rink-ice ground, berry jersey type, daisies as her fingerprint */
+:root{
+  --ice:#e4f2f9; --ice-2:#cde5f1; --card:#ffffff; --line:#b6d4e4;
+  --berry:#991a5a; --berry-ink:#6d0f3f; --on-berry:#ffffff;
+  --daisy:#f1c02c; --ink:#2b1a2c; --muted:#5d5870;
+  --good:#1f7a55; --bad:#b3261e;
+  --f-display:"Graduate","Rockwell","Georgia",serif;
+  --f-body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-script:"Allura","Brush Script MT",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ice:#0e1828; --ice-2:#152338; --card:#132036; --line:#24395a;
+  --berry:#e46aa2; --berry-ink:#f4a9cb; --on-berry:#1c0a14;
+  --daisy:#f1c02c; --ink:#e9f1f8; --muted:#9db0c6; --good:#5cc79a; --bad:#ff8a80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ice:#0e1828; --ice-2:#152338; --card:#132036; --line:#24395a;
+  --berry:#e46aa2; --berry-ink:#f4a9cb; --on-berry:#1c0a14;
+  --daisy:#f1c02c; --ink:#e9f1f8; --muted:#9db0c6; --good:#5cc79a; --bad:#ff8a80; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  background:var(--ice);
+  background-image:
+    repeating-linear-gradient(115deg,transparent 0 46px,color-mix(in srgb,var(--line) 35%,transparent) 46px 47px),
+    repeating-linear-gradient(28deg,transparent 0 83px,color-mix(in srgb,var(--line) 25%,transparent) 83px 84px);
+  color:var(--ink);font:16px/1.6 var(--f-body);
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--berry)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.1;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.6rem,4vw,2.3rem);color:var(--berry)}
+p{margin:0}
+a{color:var(--berry)}
+:focus-visible{outline:3px solid var(--daisy);outline-offset:2px}
+.label{font:700 .72rem/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+section{padding-block:56px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:8px 24px;margin-bottom:24px}
+.sec-head p{color:var(--muted);max-width:52ch}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--berry);color:var(--on-berry);border:0;border-radius:4px;padding:12px 18px;font:700 .95rem var(--f-body);text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--berry-ink)}
+.btn.ghost{background:transparent;color:var(--berry);box-shadow:inset 0 0 0 2px var(--berry)}
+.btn.ghost:hover{background:color-mix(in srgb,var(--berry) 10%,transparent)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px}
+
+/* ticker + nav */
+.ticker{background:var(--berry);color:var(--on-berry);overflow:hidden;white-space:nowrap;font:500 .82rem var(--f-body)}
+.ticker-track{display:inline-block;padding-block:8px;animation:tick 45s linear infinite}
+.ticker-track span{margin-right:48px}
+.ticker-track b{font-family:var(--f-display);font-weight:400;margin-right:8px}
+@keyframes tick{to{transform:translateX(-50%)}}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--ice) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--berry);font-family:var(--f-display);font-size:1.05rem;white-space:nowrap;padding-block:10px}
+.brand svg{width:34px;height:34px;flex:none}
+.links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1}
+.links::-webkit-scrollbar{display:none}
+.links a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:.86rem;font-weight:500;padding:8px 10px;border-radius:4px}
+.links a:hover{background:var(--ice-2);color:var(--berry)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding-block:48px 56px}
+.hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,8vw,5.2rem);color:var(--berry);letter-spacing:.01em}
+.hero h1 small{display:block;font-size:.34em;letter-spacing:.2em;color:var(--ink);margin-bottom:10px}
+.hero .lede{font-size:1.1rem;max-width:44ch;margin-block:18px 24px}
+.hero .lede em{font-family:var(--f-script);font-style:normal;font-size:1.6em;color:var(--berry);line-height:0}
+.daisy{position:absolute;pointer-events:none;opacity:.9}
+.side{display:grid;gap:16px}
+.countdown{padding:20px}
+.cd-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.cd-row div{text-align:center;background:var(--ice);border-radius:4px;padding:10px 4px}
+.cd-row b{display:block;font:400 clamp(1.5rem,5vw,2rem)/1 var(--f-display);color:var(--berry)}
+.cd-row span{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.nextgame{padding:20px;display:grid;gap:10px}
+.matchup{display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:var(--f-display);font-size:1.15rem}
+.matchup .vs{font-family:var(--f-body);font-size:.8rem;color:var(--muted)}
+.note{font-size:.78rem;color:var(--muted)}
+
+/* news */
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.news article{padding:20px;display:grid;gap:10px;align-content:start}
+.news h3{font-family:var(--f-body);font-weight:700;font-size:1.08rem;line-height:1.3;color:var(--ink)}
+.news p{color:var(--muted);font-size:.93rem}
+.tag{justify-self:start;font:700 .68rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:3px;background:var(--ice-2);color:var(--berry)}
+
+/* roster */
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.player{position:relative;padding:20px;cursor:pointer;text-align:left;font:inherit;color:inherit;overflow:hidden;transition:transform .15s}
+.player:hover{transform:translateY(-2px)}
+.player .jn{position:absolute;right:12px;top:4px;font:400 4.5rem/1 var(--f-display);color:color-mix(in srgb,var(--berry) 14%,transparent)}
+.player h3{font-size:1.25rem;color:var(--ink);position:relative}
+.player .pos{color:var(--muted);font-size:.85rem;margin-block:4px 12px}
+.player .pull{font-size:.92rem}
+.player .more{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:.9rem;color:var(--muted)}
+.player.captain{background:var(--berry);color:var(--on-berry);border-color:var(--berry)}
+.player.captain h3,.player.captain .pos,.player.captain .more{color:var(--on-berry)}
+.player.captain .jn{color:color-mix(in srgb,var(--on-berry) 18%,transparent)}
+.player.captain .more{border-color:color-mix(in srgb,var(--on-berry) 40%,transparent)}
+.cbadge{display:inline-grid;place-items:center;width:26px;height:26px;border:2px solid currentColor;border-radius:50%;font:400 .8rem var(--f-display);margin-right:8px;vertical-align:2px}
+
+/* stats */
+.split{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.tablebox{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font:700 .7rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+td.r,th.r{text-align:right}
+tr.hl td{background:color-mix(in srgb,var(--berry) 8%,transparent)}
+.res{display:grid;gap:8px;padding:16px}
+.res-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.res-row:last-child{border:0}
+.wl{flex:none;width:28px;height:28px;display:grid;place-items:center;border-radius:4px;font:700 .8rem var(--f-body);color:#fff}
+.wl.w{background:var(--good)}.wl.l{background:var(--bad)}
+.res-row .opp{flex:1;min-width:0}
+.res-row small{display:block;color:var(--muted)}
+
+/* schedule */
+.sched{display:grid;gap:10px}
+.game{display:grid;grid-template-columns:90px 70px 1fr auto;gap:16px;align-items:center;padding:14px 18px}
+.game .date{font:400 1rem var(--f-display);color:var(--berry)}
+.ha{font:700 .7rem var(--f-body);letter-spacing:.12em;padding:4px 8px;border-radius:3px;text-align:center}
+.ha.home{background:var(--ice-2);color:var(--ink)}
+.ha.away{background:var(--berry);color:var(--on-berry)}
+.game .where{min-width:0}
+.game .where small{display:block;color:var(--muted)}
+.game .trip{font-size:.82rem;color:var(--muted);text-align:right}
+.game.onebed{box-shadow:inset 4px 0 0 var(--daisy)}
+.game.onebed .trip{color:var(--berry);font-weight:700}
+
+/* feed */
+.feed{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.post{overflow:hidden;display:flex;flex-direction:column}
+.post-img{aspect-ratio:1;max-width:100%;display:grid;place-items:center;padding:20px;text-align:center;font:400 1.3rem/1.25 var(--f-display);color:var(--on-berry);background:var(--berry);position:relative}
+.post-img.alt{background:var(--ice-2);color:var(--berry)}
+.post-img.daisybg{background:var(--daisy);color:#3b2400}
+.post-body{padding:14px 16px;display:grid;gap:6px;font-size:.9rem}
+.post-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.8rem}
+.heart{background:none;border:0;cursor:pointer;color:var(--berry);font:inherit;padding:0}
+.post .handle{font-weight:700}
+
+/* tracker */
+.tracker{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+.chartbox{padding:20px}
+.chartbox svg{width:100%;height:auto;display:block}
+.chartbox text{fill:var(--muted);font:12px var(--f-body)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
+.kpi{padding:16px}
+.kpi b{display:block;font:400 2rem/1.1 var(--f-display);color:var(--berry);margin-top:6px}
+.kpi small{color:var(--muted);font-size:.8rem}
+
+/* staff login */
+.staff{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.lock{padding:24px;display:grid;gap:12px}
+.lock form{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text],input[type=password],input[type=email]{flex:1;min-width:0;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--ice);color:var(--ink);font:inherit}
+.err{color:var(--bad);font-size:.88rem}
+.texts{padding:20px;display:grid;gap:8px}
+.bubble{max-width:80%;padding:9px 14px;border-radius:16px;font-size:.93rem}
+.bubble.n{justify-self:start;background:var(--ice-2);border-bottom-left-radius:4px}
+.bubble.m{justify-self:end;background:var(--berry);color:var(--on-berry);border-bottom-right-radius:4px}
+.who{font-size:.72rem;color:var(--muted)}
+.who.r{justify-self:end}
+.locked-list{display:grid;gap:10px}
+.locked-list .card{padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+
+/* playlist */
+.playlist{padding:8px 20px}
+.track{display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.track:last-child{border:0}
+.track .n{font:400 1rem var(--f-display);color:var(--berry)}
+.track small{display:block;color:var(--muted);font-size:.82rem}
+.picker{font-size:.75rem;padding:3px 8px;border-radius:99px;background:var(--ice-2);white-space:nowrap}
+
+/* arena */
+.arena{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.rinkbox{padding:16px;overflow-x:auto}
+.rinkbox svg{width:100%;min-width:420px;height:auto;display:block}
+.facts{padding:20px;display:grid;gap:14px}
+.facts dt{font:700 .7rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:2px 0 0}
+
+/* quiz */
+.quiz{padding:24px;max-width:680px}
+.q-opts{display:grid;gap:8px;margin-top:16px}
+.q-opt{text-align:left;padding:14px 16px;border:1px solid var(--line);border-radius:4px;background:var(--ice);color:var(--ink);font:inherit;cursor:pointer}
+.q-opt:hover{border-color:var(--berry);color:var(--berry)}
+.q-prog{display:flex;gap:6px;margin-bottom:16px}
+.q-prog i{height:4px;flex:1;border-radius:2px;background:var(--line)}
+.q-prog i.on{background:var(--berry)}
+.result h3{font-size:2rem;color:var(--berry);margin-block:8px}
+
+/* tickets */
+.tickets{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ticket{display:grid;grid-template-columns:1fr 92px;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;position:relative}
+.ticket .main{padding:22px;display:grid;gap:10px}
+.ticket .stub{background:var(--berry);color:var(--on-berry);display:grid;place-items:center;border-left:2px dashed var(--ice);writing-mode:vertical-rl;font:400 1rem var(--f-display);letter-spacing:.15em}
+.ticket h3{font-size:1.5rem;color:var(--berry)}
+.ticket .row{display:flex;gap:20px;flex-wrap:wrap;font-size:.85rem}
+.ticket .row b{display:block;font-family:var(--f-display);font-weight:400;font-size:1rem}
+.ticket form{display:flex;gap:8px;flex-wrap:wrap}
+.ok{color:var(--good);font-weight:700;font-size:.92rem}
+
+/* authors / book */
+.authors{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.author{padding:24px;display:grid;gap:10px}
+.author .sig{font:400 2.4rem/1 var(--f-script);color:var(--berry)}
+.author .pov{font:700 .72rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.handles{display:flex;flex-wrap:wrap;gap:6px}
+.handles a,.handles span{font-size:.85rem;padding:4px 10px;border-radius:99px;background:var(--ice-2);text-decoration:none}
+.book{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
+.cover{width:220px;max-width:100%;aspect-ratio:2/3;border-radius:3px 8px 8px 3px;background:#d7ecf6;position:relative;overflow:hidden;box-shadow:0 18px 40px -16px rgba(40,20,40,.45);display:grid;place-items:center;text-align:center;padding:16px}
+.cover .ct{font:400 2.6rem/.95 var(--f-display);color:#991a5a}
+.cover .ct small{display:block;font-size:.45em;letter-spacing:.08em}
+.cover .ca{position:absolute;bottom:14px;left:0;right:0;font:400 1.05rem var(--f-script);color:#991a5a}
+.book blockquote{margin:0;font:400 1.25rem/1.45 var(--f-body);max-width:52ch}
+.book .buy{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.pitchq{font:400 2rem/1.1 var(--f-script);color:var(--berry);margin-top:14px}
+
+/* tropes */
+.tropes{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:20px}
+.chip{padding:7px 12px;border-radius:99px;background:var(--ice-2);font-size:.88rem;font-weight:500}
+.chip.hot{background:var(--berry);color:var(--on-berry)}
+.cw{padding:20px}
+details summary{cursor:pointer;font-weight:700;color:var(--berry)}
+details ul{margin:12px 0 0;padding-left:18px;color:var(--ink)}
+details li{margin-block:4px}
+.heat{display:flex;gap:4px;margin-top:6px}
+.heat i{width:22px;height:8px;border-radius:2px;background:var(--line)}
+.heat i.on{background:var(--berry)}
+
+footer{background:var(--berry);color:var(--on-berry);padding-block:36px;margin-top:32px}
+footer .wrap{display:grid;gap:10px;font-size:.88rem}
+footer .fb{font-family:var(--f-display);font-size:1.3rem}
+footer a{color:var(--on-berry)}
+
+@media (max-width:860px){
+  .hero-grid,.split,.tracker,.staff,.arena,.tickets,.authors,.tropes{grid-template-columns:1fr}
+  .news,.feed{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .news,.feed{grid-template-columns:1fr}
+  .book{grid-template-columns:1fr;justify-items:start}
+  .game{grid-template-columns:auto 1fr;gap:6px 12px}
+  .game .date{grid-column:1}.game .ha{grid-column:2;justify-self:start}
+  .game .where,.game .trip{grid-column:1/-1;text-align:left}
+  .ticket{grid-template-columns:1fr 56px}
+  .kpis{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="daisy" viewBox="0 0 100 100">
+    <g fill="#ffffff" stroke="#e4d7c4" stroke-width="1">
+      <ellipse cx="50" cy="22" rx="10" ry="22"/><ellipse cx="50" cy="78" rx="10" ry="22"/>
+      <ellipse cx="22" cy="50" rx="22" ry="10"/><ellipse cx="78" cy="50" rx="22" ry="10"/>
+      <ellipse cx="30" cy="30" rx="10" ry="21" transform="rotate(-45 30 30)"/><ellipse cx="70" cy="70" rx="10" ry="21" transform="rotate(-45 70 70)"/>
+      <ellipse cx="70" cy="30" rx="10" ry="21" transform="rotate(45 70 30)"/><ellipse cx="30" cy="70" rx="10" ry="21" transform="rotate(45 30 70)"/>
+    </g>
+    <circle cx="50" cy="50" r="12" fill="#f1c02c"/>
+  </symbol>
+  <symbol id="crest" viewBox="0 0 64 64">
+    <path d="M32 3 58 12v18c0 16-11 26-26 31C17 56 6 46 6 30V12Z" fill="var(--berry)"/>
+    <path d="M32 8 53 15.5V30c0 13-9 21.5-21 26C20 51.5 11 43 11 30V15.5Z" fill="none" stroke="var(--ice)" stroke-width="2"/>
+    <path d="M22 41c2-7 8-10 14-10 3 0 5-2 5-5 0-4-3-7-7-7-3 0-5 1-6 3l-5-1 4 4c-1 2-1 4 0 6-5 1-8 5-5 10Z" fill="var(--ice)"/>
+    <circle cx="35" cy="22.5" r="1.4" fill="var(--berry)"/>
+  </symbol>
+</svg>
+
+<div class="ticker" aria-label="Latest headlines">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="#home"><svg><use href="#crest"/></svg>Ganders</a>
+    <div class="links">
+      <a href="#news">News</a><a href="#roster">Roster</a><a href="#stats">Stats</a><a href="#schedule">Schedule</a>
+      <a href="#feed">Social</a><a href="#rehab">Rep Tracker</a><a href="#staff">Staff</a><a href="#playlist">Playlist</a>
+      <a href="#arena">Arena</a><a href="#quiz">Quiz</a><a href="#tickets">Tickets</a><a href="#authors">Authors</a>
+      <a href="#book">The Book</a><a href="#tropes">Tropes &amp; CWs</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HOME -->
+<header class="hero" id="home">
+  <svg class="daisy" style="width:70px;right:4%;top:18px;transform:rotate(12deg)"><use href="#daisy"/></svg>
+  <svg class="daisy" style="width:38px;right:20%;top:70px"><use href="#daisy"/></svg>
+  <svg class="daisy" style="width:52px;left:44%;bottom:10px;transform:rotate(-18deg)"><use href="#daisy"/></svg>
+  <div class="wrap hero-grid">
+    <div>
+      <h1><small>Official team site</small>Lake City Ganders</h1>
+      <p class="lede">Home of hockey, heart, and one very public reputation rehab. Run by your favourite social media manager, <em>Daisy</em>. (It's Maisie. Ignore the captain.)</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="#tickets">Get your ticket: pre-order</a>
+        <a class="btn ghost" href="#roster">Meet the team</a>
+      </div>
+    </div>
+    <div class="side">
+      <div class="card countdown">
+        <span class="label">Puck drop: Rules of the Rink release</span>
+        <div class="cd-row num" id="cd">
+          <div><b id="cd-d">--</b><span>Days</span></div><div><b id="cd-h">--</b><span>Hrs</span></div>
+          <div><b id="cd-m">--</b><span>Min</span></div><div><b id="cd-s">--</b><span>Sec</span></div>
+        </div>
+        <p class="note" style="margin-top:8px">Release date to be confirmed.</p>
+      </div>
+      <div class="card nextgame">
+        <span class="label">Next game</span>
+        <div class="matchup"><span>Ganders</span><span class="vs">vs</span><span>Harbor Wolves</span></div>
+        <p class="note">Saturday · 7:00 PM · The Pond, Lake City. Captain Reade is expected to play. Fights are not expected. Please.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- NEWS -->
+<section id="news"><div class="wrap">
+  <div class="sec-head"><h2>Club news</h2><p>Headlines from the press office. Some written by Maisie, some survived by her.</p></div>
+  <div class="news">
+    <article class="card"><span class="tag">Press office</span><h3>Ganders launch new community campaign with Captain Nolan Reade</h3><p>The club confirms a season-long content series showing fans "the man behind the mask." The captain was unavailable for comment. He was available, he just didn't comment.</p></article>
+    <article class="card"><span class="tag">Match report</span><h3>Reade scores twice, smiles zero times in win over Stormriders</h3><p>A goal, an assist, and a stare that sent a camera operator back to the tunnel. Social media manager calls it "real progress."</p></article>
+    <article class="card"><span class="tag">Discipline</span><h3>"The Grim" tops league in penalty minutes again</h3><p>League sources say the captain's fight count is under review. The club says the numbers "are trending in a positive direction."</p></article>
+  </div>
+</div></section>
+
+<!-- ROSTER -->
+<section id="roster" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Roster</h2><p>Tap a player for the bio the press office approved.</p></div>
+  <div class="roster" id="rosterGrid"></div>
+</div></section>
+
+<!-- STATS -->
+<section id="stats" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Stats &amp; results</h2><p>Season to date. PIM = penalty minutes, which we are working on.</p></div>
+  <div class="split">
+    <div class="card tablebox"><table class="num">
+      <thead><tr><th>Player</th><th class="r">GP</th><th class="r">G</th><th class="r">A</th><th class="r">PTS</th><th class="r">PIM</th></tr></thead>
+      <tbody id="statsBody"></tbody>
+    </table></div>
+    <div class="card res" id="results"><span class="label">Last five</span></div>
+  </div>
+</div></section>
+
+<!-- SCHEDULE -->
+<section id="schedule" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Schedule &amp; road trips</h2><p>Home games at The Pond. Away trips booked by travel ops, who would like everyone to stop asking about the hotel in Cedar Falls.</p></div>
+  <div class="sched" id="sched"></div>
+</div></section>
+
+<!-- FEED -->
+<section id="feed" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>@lakecityganders</h2><p>Maisie's feed. Every post approved by Maisie. Not every post approved by the captain.</p></div>
+  <div class="feed" id="feedGrid"></div>
+</div></section>
+
+<!-- REHAB -->
+<section id="rehab" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Reputation Rehab tracker</h2><p>Internal campaign dashboard, accidentally made public. Maisie is aware. Maisie is fine.</p></div>
+  <div class="tracker">
+    <div class="card chartbox">
+      <span class="label">Public approval of Nolan Reade, by week (%)</span>
+      <svg id="repChart" viewBox="0 0 600 260" role="img" aria-label="Approval climbs from 22% to 66% over eight weeks, crashes to 34% in week 9 after a fight, then recovers to 70% by week 12."></svg>
+    </div>
+    <div class="kpis">
+      <div class="card kpi"><span class="label">Fights this season</span><b class="num">7</b><small>Down from 19 last season</small></div>
+      <div class="card kpi"><span class="label">Media mentions</span><b class="num">1,284</b><small>Up 340% since campaign launch</small></div>
+      <div class="card kpi"><span class="label">Smiles on camera</span><b class="num">0</b><small>Goal: 1</small></div>
+      <div class="card kpi"><span class="label">Times he called her Daisy</span><b class="num" id="daisyCount">212</b><small>Unofficial count</small></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- STAFF -->
+<section id="staff" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Staff only</h2><p>Bonus content for readers. The password is in the book.</p></div>
+  <div class="staff">
+    <div class="card lock">
+      <span class="label">Ganders staff portal</span>
+      <form id="loginForm">
+        <label for="pw" class="label" style="width:100%">Password</label>
+        <input id="pw" type="password" autocomplete="off" placeholder="Hint: what he calls her">
+        <button class="btn" type="submit">Log in</button>
+      </form>
+      <p class="err" id="pwErr" hidden>That's not it. Check the book again.</p>
+      <div class="locked-list" id="lockedList">
+        <div class="card"><span>Deleted scene: the bus ride home</span><span class="label">Locked</span></div>
+        <div class="card"><span>Maisie's campaign notes on Nolan</span><span class="label">Locked</span></div>
+        <div class="card"><span>Text thread: Reade &amp; Daisy</span><span class="label">Locked</span></div>
+      </div>
+    </div>
+    <div class="card texts" id="texts" hidden>
+      <span class="label">Messages · Reade</span>
+      <span class="who">Reade · 11:42 PM</span>
+      <div class="bubble n">You left your lanyard in my truck.</div>
+      <span class="who r">Maisie · 11:43 PM</span>
+      <div class="bubble m">It's MAISIE on the lanyard. Literally printed. On the lanyard.</div>
+      <span class="who">Reade · 11:43 PM</span>
+      <div class="bubble n">Goodnight, Daisy.</div>
+      <span class="who r">Maisie · 11:51 PM</span>
+      <div class="bubble m">goodnight 🙄🌼</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- PLAYLIST -->
+<section id="playlist" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Locker room playlist</h2><p>Pre-game warm-up tracks, chosen by the team.</p></div>
+  <div class="card playlist" id="playlistBox"></div>
+</div></section>
+
+<!-- ARENA -->
+<section id="arena" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>The Pond</h2><p>Home of the Ganders since the club's founding. Tap a marker to learn what happens there.</p></div>
+  <div class="arena">
+    <div class="card rinkbox">
+      <svg viewBox="0 0 520 280" role="img" aria-label="Arena map showing the rink, both benches, the penalty box, the press box, the tunnel to the locker room and the merch stand.">
+        <rect x="8" y="8" width="504" height="264" rx="24" fill="var(--ice-2)" stroke="var(--line)"/>
+        <rect x="70" y="60" width="380" height="160" rx="70" fill="var(--card)" stroke="var(--berry)" stroke-width="3"/>
+        <line x1="260" y1="60" x2="260" y2="220" stroke="var(--bad)" stroke-width="3"/>
+        <line x1="195" y1="60" x2="195" y2="220" stroke="var(--berry)" stroke-width="2" opacity=".6"/>
+        <line x1="325" y1="60" x2="325" y2="220" stroke="var(--berry)" stroke-width="2" opacity=".6"/>
+        <circle cx="260" cy="140" r="26" fill="none" stroke="var(--berry)" stroke-width="2"/>
+        <use href="#daisy" x="248" y="128" width="24" height="24"/>
+        <rect x="200" y="226" width="50" height="18" rx="3" fill="var(--berry)"/><text x="225" y="239" text-anchor="middle" fill="var(--on-berry)" style="font:700 10px var(--f-body)">HOME</text>
+        <rect x="270" y="226" width="50" height="18" rx="3" fill="var(--muted)"/><text x="295" y="239" text-anchor="middle" fill="var(--card)" style="font:700 10px var(--f-body)">AWAY</text>
+        <g class="pin" data-k="box" tabindex="0" role="button"><rect x="232" y="36" width="56" height="18" rx="3" fill="var(--bad)"/><text x="260" y="49" text-anchor="middle" fill="#fff" style="font:700 10px var(--f-body)">PEN BOX</text></g>
+        <g class="pin" data-k="press" tabindex="0" role="button"><rect x="210" y="14" width="100" height="18" rx="3" fill="var(--daisy)"/><text x="260" y="27" text-anchor="middle" fill="#3b2400" style="font:700 10px var(--f-body)">PRESS BOX</text></g>
+        <g class="pin" data-k="tunnel" tabindex="0" role="button"><rect x="20" y="126" width="40" height="28" rx="3" fill="var(--berry)"/><text x="40" y="144" text-anchor="middle" fill="var(--on-berry)" style="font:700 9px var(--f-body)">TUNNEL</text></g>
+        <g class="pin" data-k="merch" tabindex="0" role="button"><rect x="452" y="126" width="48" height="28" rx="3" fill="var(--berry)"/><text x="476" y="144" text-anchor="middle" fill="var(--on-berry)" style="font:700 9px var(--f-body)">MERCH</text></g>
+      </svg>
+    </div>
+    <dl class="card facts" id="arenaFacts">
+      <div><dt>Selected</dt><dd id="pinText">Tap a marker on the map.</dd></div>
+      <div><dt>Capacity</dt><dd class="num">16,400</dd></div>
+      <div><dt>Address</dt><dd>1 Gander Way, Lake City (location to be confirmed)</dd></div>
+      <div><dt>Fan rule</dt><dd>No goose costumes on the glass. We know it's tempting.</dd></div>
+    </dl>
+  </div>
+</div></section>
+
+<!-- QUIZ -->
+<section id="quiz" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Which Gander are you?</h2><p>Four questions. Results are binding.</p></div>
+  <div class="card quiz" id="quizBox"></div>
+</div></section>
+
+<!-- TICKETS -->
+<section id="tickets" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Get your ticket</h2><p>Pre-order the book or claim an early-reader seat.</p></div>
+  <div class="tickets">
+    <div class="ticket">
+      <div class="main">
+        <span class="label">Admit one · General admission</span>
+        <h3>Pre-order</h3>
+        <div class="row"><div>Event<b>Rules of the Rink</b></div><div>Seat<b>Front row</b></div><div>Format<b>Ebook · KU · Paperback</b></div></div>
+        <a class="btn" href="#book">Pre-order now</a>
+      </div>
+      <div class="stub">GANDERS</div>
+    </div>
+    <div class="ticket">
+      <div class="main">
+        <span class="label">Admit one · Press pass</span>
+        <h3>ARC team</h3>
+        <p style="font-size:.9rem">Read it early, review it honestly, sit in the press box with Maisie.</p>
+        <form id="arcForm">
+          <label for="arcEmail" class="label" style="width:100%">Email</label>
+          <input id="arcEmail" type="email" required placeholder="you@email.com">
+          <button class="btn" type="submit">Claim seat</button>
+        </form>
+        <p class="ok" id="arcOk" hidden>Seat claimed. Watch your inbox for details.</p>
+      </div>
+      <div class="stub">PRESS</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- AUTHORS -->
+<section id="authors" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Meet the authors</h2><p>Two authors, two points of view, one rink.</p></div>
+  <div class="authors">
+    <div class="card author">
+      <span class="sig">Brittany Evermore</span>
+      <span class="pov">Writes: POV to be confirmed</span>
+      <p>Indie romance author of small-town, workplace and dark romance. Based in The Hague. Loves a grump who melts for exactly one person.</p>
+      <div class="handles"><a href="https://brittanyevermore.com" target="_blank" rel="noopener">brittanyevermore.com</a><span>@authorbrittanyevermore</span></div>
+    </div>
+    <div class="card author">
+      <span class="sig">W. Griffin</span>
+      <span class="pov">Writes: POV to be confirmed</span>
+      <p>Author bio coming soon.</p>
+      <div class="handles"><a href="https://wgriffinpublishing.com" target="_blank" rel="noopener">wgriffinpublishing.com</a><span>@w.griffinpublishing</span><span>@author.wgriffin</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- BOOK -->
+<section id="book" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>About the book</h2></div>
+  <div class="book">
+    <div class="cover">
+      <svg class="daisy" style="width:30px;left:14px;top:18px;opacity:1"><use href="#daisy"/></svg>
+      <svg class="daisy" style="width:22px;right:20px;top:60px;opacity:1"><use href="#daisy"/></svg>
+      <svg class="daisy" style="width:26px;right:28px;bottom:50px;opacity:1"><use href="#daisy"/></svg>
+      <div class="ct"><small>RULES OF THE</small>RINK</div>
+      <div class="ca">Brittany Evermore &amp; W. Griffin</div>
+    </div>
+    <div>
+      <span class="label">A grumpy x sunshine hockey romance</span>
+      <blockquote style="margin-top:12px">The infamous captain of the Lake City Ganders is forced to clean up his reputation with the help of the team's relentlessly upbeat social media manager. But road trips, one-bed disasters and a growing secret attraction make staying professional increasingly impossible.</blockquote>
+      <p class="pitchq">He talked about you.</p>
+      <div class="buy">
+        <a class="btn" href="#" aria-disabled="true">Amazon (link coming soon)</a>
+        <a class="btn ghost" href="#" aria-disabled="true">Read in Kindle Unlimited</a>
+        <a class="btn ghost" href="#" aria-disabled="true">Add on Goodreads</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- TROPES -->
+<section id="tropes" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><h2>Tropes &amp; content warnings</h2></div>
+  <div class="tropes">
+    <div class="card">
+      <div class="chips">
+        <span class="chip hot">Grumpy x sunshine</span><span class="chip hot">Hockey romance</span><span class="chip">Captain x social media manager</span>
+        <span class="chip">Workplace romance</span><span class="chip hot">Forced proximity</span><span class="chip">Road trips</span>
+        <span class="chip hot">Only one bed</span><span class="chip">Banter</span><span class="chip">Secret attraction</span>
+        <span class="chip">"Keep it professional"</span><span class="chip">Soft for her only</span><span class="chip">He fights for her</span>
+        <span class="chip">Jersey jealousy</span><span class="chip">Dual POV</span>
+      </div>
+    </div>
+    <div class="card cw">
+      <span class="label">Spice level</span>
+      <div class="heat" aria-label="Spice 4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+      <details style="margin-top:16px"><summary>Show content warnings</summary>
+        <ul>
+          <li>Explicit, on-page sexual content</li>
+          <li>On-ice violence and fighting</li>
+          <li>Crude and sexual language</li>
+          <li>Workplace power dynamics</li>
+        </ul>
+        <p class="note" style="margin-top:10px">Full list to be confirmed before release.</p>
+      </details>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span class="fb">Lake City Ganders</span>
+  <p>The Lake City Ganders are a fictional team from the novel <i>Rules of the Rink</i> by Brittany Evermore &amp; W. Griffin. Not affiliated with any real hockey club or league.</p>
+  <p>© 2026 Brittany Evermore &amp; W. Griffin · <a href="https://wgriffinpublishing.com" target="_blank" rel="noopener">WGP</a></p>
+</div></footer>
+
+<script>
+// ===== EDIT CONTENT HERE =====
+const RELEASE_DATE = "2027-02-14T00:00:00+01:00"; // placeholder
+
+const HEADLINES = [
+  ["Ganders","beat Stormriders 4–2 at The Pond"],
+  ["Reade","named in league's top 3 for penalty minutes. Again."],
+  ["Social","Ganders TikTok passes 100K followers"],
+  ["Road trip","Ganders head east for three away games"],
+  ["Community","Captain visits youth clinic, does not scare anyone (much)"],
+];
+
+const PLAYERS = [
+  {n:"Nolan Reade",no:17,pos:"Centre · Captain",cap:true,pull:"\"The Grim.\" Leads the team in goals and in penalty minutes.",more:"Hobbies: unknown. Favourite food: unknown. Asked for a fun fact, the captain said \"No.\" The press office is still working on this bio."},
+  {n:"Callum Price",no:9,pos:"Right wing",pull:"Fan favourite, golden retriever energy, owns the most-sold jersey in the shop.",more:"Has worn a microphone for every content shoot Maisie has asked for. Nolan has noticed."},
+  {n:"Mikko Laine",no:31,pos:"Goaltender",pull:"Talks to his posts before every period. They have never let him down.",more:"Pre-game ritual: left skate first, then a nap, then black licorice."},
+  {n:"Dex Okafor",no:44,pos:"Defence",pull:"Team prankster. Runs the locker room speaker.",more:"Responsible for at least four of the playlist tracks and every rumour on the team bus."},
+  {n:"Theo Brandt",no:22,pos:"Left wing",pull:"Rookie. Still says thank you to the Zamboni driver.",more:"First NHL-level goal came off a Reade assist. Has the puck framed."},
+  {n:"Sully Mercer",no:5,pos:"Defence · Alternate captain",pull:"The one who calms the captain down. Usually.",more:"Fourteen seasons in. Has seen it all, and still thinks this season is different."},
+];
+
+const STATS = [
+  ["Nolan Reade",24,14,11,25,96],["Callum Price",24,11,13,24,8],["Theo Brandt",22,8,6,14,12],
+  ["Dex Okafor",24,3,10,13,34],["Sully Mercer",24,2,9,11,20],
+];
+
+const RESULTS = [
+  ["w","Stormriders","4–2","Home · Reade 2G"],["l","Iron Bay Bears","1–3","Away · Reade 5 PIM"],
+  ["w","Northgate Kings","5–1","Home"],["w","Cedar Falls Comets","3–2 OT","Away · Price OT winner"],
+  ["l","Harbor Wolves","2–4","Away · Fight, 2nd period"],
+];
+
+const SCHEDULE = [
+  ["Sat 21 Nov","home","Harbor Wolves","The Pond","7:00 PM"],
+  ["Tue 24 Nov","away","Iron Bay Bears","Iron Bay Arena","Bus · Hotel: Iron Bay Marriott"],
+  ["Thu 26 Nov","away","Cedar Falls Comets","Comets Centre","Hotel: Cedar Falls Inn · 1 room left for staff",true],
+  ["Sat 28 Nov","away","Northgate Kings","Kings Coliseum","Charter flight home after"],
+  ["Wed 2 Dec","home","Stormriders","The Pond","Sponsor jersey night"],
+];
+
+const POSTS = [
+  {t:"Captain's corner, episode 1",c:"alt",cap:"We asked Nolan three questions. He answered one. Progress! 🌼 #GanderNation",likes:8412},
+  {t:"Find someone who looks at you like Reade looks at a loose puck",c:"",cap:"Not a threat. Just focus. (Comments are moderated.)",likes:12930},
+  {t:"Sponsor jersey night 🎉",c:"daisybg",cap:"Staff got to pick any player's jersey. Some of us picked twice. Don't ask.",likes:6024},
+  {t:"Road trip day 2",c:"alt",cap:"Team bus karaoke ranking: Dex 10/10, Mikko 7/10, captain refused to participate 0/10.",likes:9877},
+  {t:"Helmets off for the kids' clinic",c:"",cap:"The Grim taught 30 kids to skate backwards and one kid to scowl. Wholesome content only.",likes:15402},
+  {t:"About last night",c:"daisybg",cap:"We are aware of the second-period incident. We are working on it. We are fine. 🙂",likes:21566},
+];
+
+const REP = [22,28,35,41,47,55,61,66,34,45,58,70];
+
+const TRACKS = [
+  ["Pre-game hype","Dex's pick","Dex"],["Warm-up skate","Callum's pick","Callum"],
+  ["Goalie nap track","Mikko's pick","Mikko"],["Something loud and angry","The captain's only request","Nolan"],
+  ["A song that is suspiciously sweet","Added by: unknown (the captain denies it)","???"],
+];
+
+const PINS = {
+  box:"Penalty box. The captain's second home. Maisie has a photo of him in here she is not allowed to post.",
+  press:"Press box. Where Maisie works on game nights, two laptops and a phone on 4%.",
+  tunnel:"Tunnel to the locker room. Staff only. Things happen here. We don't talk about it.",
+  merch:"Merch stand. The READE jersey keeps selling out. Nobody knows who keeps buying them in small sizes.",
+};
+
+const QUIZ = [
+  {q:"It's game day. How do you prepare?",o:[["Silence. Headphones. Do not speak to me.","nolan"],["Selfie with every fan in the lobby.","callum"],["Exact same routine as always, in the exact same order.","mikko"],["Hide a rubber goose in someone's gear bag.","dex"]]},
+  {q:"Someone insults your friend. You…",o:[["Drop the gloves. No discussion.","nolan"],["Kill them with kindness and a better comeback.","callum"],["Stay calm and outplay them.","mikko"],["Start a chant about them from the bench.","dex"]]},
+  {q:"Pick a road-trip snack.",o:[["Black coffee. That's the snack.","nolan"],["Whatever the fans brought to the bus.","callum"],["Licorice, always licorice.","mikko"],["Gas station everything.","dex"]]},
+  {q:"Your love language?",o:[["Quietly making sure they never wear another man's jersey again.","nolan"],["Words of affirmation, loudly, in public.","callum"],["Showing up, every single time.","mikko"],["Making them laugh until it hurts.","dex"]]},
+];
+const RESULTS_Q = {
+  nolan:["Nolan Reade","The Grim","You're terrifying in public and soft in private. Your person gets a nickname they pretend to hate."],
+  callum:["Callum Price","The Golden Boy","Everybody's favourite, and you know it. You'd let Maisie film you doing literally anything."],
+  mikko:["Mikko Laine","The Wall","Calm, superstitious and reliable. You have a ritual for everything and it works."],
+  dex:["Dex Okafor","The Chaos Agent","The heart of the locker room. You're the reason the team bus is never quiet."],
+};
+// ===== END CONTENT =====
+
+const $=s=>document.querySelector(s);
+const fmt=n=>n.toLocaleString("en-US");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// ticker (doubled for seamless loop)
+const tick=HEADLINES.map(([a,b])=>`<span><b>${esc(a)}</b>${esc(b)}</span>`).join("");
+$("#ticker").innerHTML=tick+tick;
+
+// countdown
+function cd(){
+  const diff=new Date(RELEASE_DATE)-new Date();
+  const v=diff>0?[Math.floor(diff/864e5),Math.floor(diff/36e5)%24,Math.floor(diff/6e4)%60,Math.floor(diff/1e3)%60]:[0,0,0,0];
+  ["d","h","m","s"].forEach((k,i)=>$("#cd-"+k).textContent=String(v[i]).padStart(2,"0"));
+}
+cd();setInterval(cd,1000);
+
+// roster
+$("#rosterGrid").innerHTML=PLAYERS.map((p,i)=>`
+  <button class="card player${p.cap?" captain":""}" id="pl${i}" aria-expanded="false">
+    <span class="jn num">${p.no}</span>
+    <h3>${p.cap?'<span class="cbadge">C</span>':""}${esc(p.n)}</h3>
+    <div class="pos">#${p.no} · ${esc(p.pos)}</div>
+    <p class="pull">${esc(p.pull)}</p>
+    <p class="more" hidden>${esc(p.more)}</p>
+  </button>`).join("");
+document.querySelectorAll(".player").forEach(b=>b.addEventListener("click",()=>{
+  const m=b.querySelector(".more");m.hidden=!m.hidden;b.setAttribute("aria-expanded",String(!m.hidden));
+}));
+
+// stats
+$("#statsBody").innerHTML=STATS.map((r,i)=>`<tr${i===0?' class="hl"':""}><td>${esc(r[0])}</td>${r.slice(1).map(x=>`<td class="r">${x}</td>`).join("")}</tr>`).join("");
+$("#results").insertAdjacentHTML("beforeend",RESULTS.map(r=>`
+  <div class="res-row"><span class="wl ${r[0]}">${r[0].toUpperCase()}</span>
+  <div class="opp">vs ${esc(r[1])}<small>${esc(r[3])}</small></div><b class="num">${esc(r[2])}</b></div>`).join(""));
+
+// schedule
+$("#sched").innerHTML=SCHEDULE.map(g=>`
+  <div class="card game${g[5]?" onebed":""}">
+    <span class="date">${esc(g[0])}</span>
+    <span class="ha ${g[1]}">${g[1].toUpperCase()}</span>
+    <div class="where">${g[1]==="home"?"vs":"@"} ${esc(g[2])}<small>${esc(g[3])}</small></div>
+    <span class="trip">${esc(g[4])}</span>
+  </div>`).join("");
+
+// feed
+$("#feedGrid").innerHTML=POSTS.map((p,i)=>`
+  <article class="card post">
+    <div class="post-img ${p.c}">${esc(p.t)}</div>
+    <div class="post-body">
+      <p><span class="handle">lakecityganders</span> ${esc(p.cap)}</p>
+      <div class="post-meta"><button class="heart" data-i="${i}" aria-pressed="false">♡ <span class="num">${fmt(p.likes)}</span></button><span>Posted by Maisie</span></div>
+    </div>
+  </article>`).join("");
+document.querySelectorAll(".heart").forEach(h=>h.addEventListener("click",()=>{
+  const p=POSTS[h.dataset.i],on=h.getAttribute("aria-pressed")!=="true";
+  h.setAttribute("aria-pressed",String(on));
+  h.innerHTML=`${on?"♥":"♡"} <span class="num">${fmt(p.likes+(on?1:0))}</span>`;
+}));
+
+// reputation chart
+(function(){
+  const W=600,H=260,L=40,R=16,T=16,B=36,svg=$("#repChart");
+  const x=i=>L+i*(W-L-R)/(REP.length-1),y=v=>T+(1-v/100)*(H-T-B);
+  let s="";
+  [0,25,50,75,100].forEach(v=>{s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${v}</text>`});
+  REP.forEach((v,i)=>{s+=`<text x="${x(i)}" y="${H-12}" text-anchor="middle">W${i+1}</text>`});
+  const pts=REP.map((v,i)=>`${x(i)},${y(v)}`).join(" ");
+  s+=`<polygon points="${x(0)},${y(0)} ${pts} ${x(REP.length-1)},${y(0)}" fill="var(--berry)" opacity=".12"/>`;
+  s+=`<polyline points="${pts}" fill="none" stroke="var(--berry)" stroke-width="3" stroke-linejoin="round"/>`;
+  REP.forEach((v,i)=>{s+=`<circle cx="${x(i)}" cy="${y(v)}" r="${i===8||i===REP.length-1?5:3}" fill="${i===8?"var(--bad)":"var(--berry)"}"/>`});
+  s+=`<text x="${x(8)}" y="${y(REP[8])+20}" text-anchor="middle" style="fill:var(--bad);font-weight:700">"He talked about you."</text>`;
+  s+=`<text x="${x(11)-6}" y="${y(70)-12}" text-anchor="end" style="fill:var(--berry);font-weight:700">70%</text>`;
+  svg.innerHTML=s;
+})();
+
+// staff login
+$("#loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const ok=$("#pw").value.trim().toLowerCase()==="daisy";
+  $("#pwErr").hidden=ok;
+  if(ok){
+    $("#texts").hidden=false;
+    $("#lockedList").innerHTML=["Deleted scene: the bus ride home","Maisie's campaign notes on Nolan","Text thread: Reade & Daisy"]
+      .map((t,i)=>`<div class="card"><span>${esc(t)}</span><span class="label" style="color:var(--good)">${i===2?"Open →":"Coming soon"}</span></div>`).join("");
+  }
+});
+
+// playlist
+$("#playlistBox").innerHTML=TRACKS.map((t,i)=>`
+  <div class="track"><span class="n num">${String(i+1).padStart(2,"0")}</span>
+  <div>${esc(t[0])}<small>${esc(t[1])}</small></div><span class="picker">${esc(t[2])}</span></div>`).join("");
+
+// arena pins
+document.querySelectorAll(".pin").forEach(p=>{
+  const go=()=>{$("#pinText").textContent=PINS[p.dataset.k]};
+  p.style.cursor="pointer";p.addEventListener("click",go);
+  p.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
+});
+
+// quiz
+let qi=0,score={};
+function renderQ(){
+  const box=$("#quizBox");
+  if(qi>=QUIZ.length){
+    const top=Object.entries(score).sort((a,b)=>b[1]-a[1])[0][0],r=RESULTS_Q[top];
+    box.innerHTML=`<div class="result"><span class="label">You are</span><h3>${esc(r[0])}</h3><p class="label" style="color:var(--berry)">${esc(r[1])}</p><p style="margin-block:12px 20px">${esc(r[2])}</p><button class="btn ghost" id="qAgain">Take it again</button></div>`;
+    $("#qAgain").onclick=()=>{qi=0;score={};renderQ()};return;
+  }
+  const q=QUIZ[qi];
+  box.innerHTML=`<div class="q-prog">${QUIZ.map((_,i)=>`<i class="${i<=qi?"on":""}"></i>`).join("")}</div>
+    <span class="label">Question ${qi+1} of ${QUIZ.length}</span><h3 style="font-size:1.4rem;margin-top:8px">${esc(q.q)}</h3>
+    <div class="q-opts">${q.o.map((o,i)=>`<button class="q-opt" data-k="${o[1]}">${esc(o[0])}</button>`).join("")}</div>`;
+  box.querySelectorAll(".q-opt").forEach(b=>b.onclick=()=>{score[b.dataset.k]=(score[b.dataset.k]||0)+1;qi++;renderQ()});
+}
+renderQ();
+
+// ARC form (demo: connect to your newsletter tool later)
+$("#arcForm").addEventListener("submit",e=>{e.preventDefault();$("#arcOk").hidden=false;e.target.hidden=true});
+document.querySelectorAll('[aria-disabled="true"]').forEach(a=>a.addEventListener("click",e=>e.preventDefault()));
+</script>
+
+</body>
+</html>
